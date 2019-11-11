@@ -1,3 +1,4 @@
+/*@author Michael Smith 116734445 */
 #include <stdio.h>
 #include <stdlib.h> 
 #include <ctype.h>
