@@ -1,6 +1,6 @@
-/*@Authors:  Adrian Denis Coffey
+/*@Authors: Adrian Denis Coffey
  *          Michael Richard Smith 
- *          William Rodgers-Ohr 
+ *          William Rodgers Orr 
  *          Tadhg Cecil Dolan
  * 
  * @Version: 0.1.3
@@ -46,7 +46,8 @@ int main(void)
     printString(str);
     printString(out);
     */
-    numbers = strtok(str, s);
+    //numbers = strtok(str, s);
+    numbers = tokeniser(str);
     while(numbers != NULL){printf("%s\n", numbers);numbers=strtok(NULL,s);}
     
     ops = numberSweeper(out);
@@ -96,7 +97,7 @@ char * numberSweeper(char * input)
 void writeFile(char * data, char * output)
 {
     FILE * fptr;
-    fptr = fopen("./input.txt", "rw");
+    fptr = fopen("input.txt", "rw");
     
     if(fptr == NULL)
     {
