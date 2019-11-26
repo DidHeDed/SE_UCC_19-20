@@ -6,10 +6,10 @@
 #include <regex.h>
 #include <string.h>
 
-#define MaxStack 50
+#define MaxStack 1000
 #define RogueValue -99
 
- 
+
 typedef struct Stack {
 
        int top;
@@ -18,39 +18,27 @@ typedef struct Stack {
 
   }Stack;
 
- 
 Stack S;
 
 int convertToPostfix(char infx[], char pofx[]);
-
 char push(char ch);
-
 char pop();
-
 int isEmpty();
-
 int precedence(char ch);
-
 void printPostfix(char pofx[], int n);
-
 int evaluate(char infx[], int size);
 
 int main() {
-
-     
 
     FILE * in = fopen("input.txt", "r");
 
     FILE * out = fopen ("answers.txt", "w");
 
-     
-
     char infx[50],pofx[50];
 
-    S.top = 0;
+    S.top = -1;
 
     fscanf(in, "%s", infx);
-
 
            convertToPostfix(infx, pofx);
 
@@ -62,9 +50,7 @@ fclose(in);
 
 fclose(out);
 
-       
-
-system("pause");
+system("success");
 
 return 0;   
 
@@ -73,39 +59,33 @@ return 0;
  
 int convertToPostfix(char infx[], char pofx[]){
 
-     
-
     char ch;
 
     int  i= 0, k = 0;
-
-     
 
     while((ch = infx[i++]) != '\0') {  
 
          if( ch == '(')
 
              push(ch);
-
-              
+        
+         
 
         else if(ch >='0' && ch <= '9')
 
              pofx[k++]=ch;
 
-              
-
         else if( ch == ')') {
-
                  while( S.ST[S.top] != '(')
 
                     pofx[k++]=pop();
 
-                         
-
                     ch = pop();
+        }
+        
+        
 
-        }       
+              
 
         else {     
 
@@ -113,15 +93,12 @@ int convertToPostfix(char infx[], char pofx[]){
 
                   pofx[k++]=pop();
 
-                         
-
                     push(ch);
 
         }
 
     }
 
-   
 
     while( S.ST[S.top] != -1)     /* Pop from stack till empty */
 
@@ -131,8 +108,6 @@ int convertToPostfix(char infx[], char pofx[]){
 
 } 
 
-      
-
 char push(char ch) {
 
       if (S.top == MaxStack - 1){
@@ -140,22 +115,17 @@ char push(char ch) {
                printf("Stack overflow\n");
 
                return 1;
-
             }
 
     S.ST[++S.top] = ch;
 
 }
 
-  
-
 char pop() { 
 
      if (isEmpty(S))
 
           return RogueValue;    
-
-                          
 
     char popped = S.ST[S.top];
 
@@ -165,15 +135,11 @@ char pop() {
 
 }
 
- 
-
 int isEmpty(){
 
     return(S.top == -1);
 
 }
-
-  
 
 int precedence(char ch){
 
@@ -183,16 +149,13 @@ int precedence(char ch){
 
     if ( ch == '*' || ch == '/' || ch == '%') return 3;
 
-   
-
     if ( ch == '^') return 4;
 
     if ( ch == 'f') return 5;
+    
 
 
 }
-
- 
 
 int evaluate (char pofx[], int size){
 
@@ -200,11 +163,7 @@ int evaluate (char pofx[], int size){
 
     Stack temp;
 
-     
-
     S.top = -1; //init Stack
-
-     
 
     for(i = 0; i < size; i++){
 
@@ -212,21 +171,17 @@ int evaluate (char pofx[], int size){
 
                 push (pofx[i] - '0');
 
-           
-
           else {
 
               b = pop();
 
               a = pop();
-
-               
+              
+             
 
               if (pofx[i] == '+')
 
                       c = a + b;
-
-                           
 
               else if (pofx[i] == '-')
 
@@ -259,11 +214,11 @@ int evaluate (char pofx[], int size){
                    for(n = pofx[i]; n > 0; n--)
 
                           c = c*n;
-
               }
 
-         
-
+              
+              
+              
               push(c);
 
          }
@@ -273,3 +228,4 @@ int evaluate (char pofx[], int size){
     return pop();
 
 }
+
