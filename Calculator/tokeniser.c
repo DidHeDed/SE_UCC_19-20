@@ -20,7 +20,7 @@
 char * strtok(char *str, const char *delims);
 
 //single procedure program
-void main(void)
+int main(void)
 {
     //declare string arrays.
     char str[max_size];
@@ -60,7 +60,7 @@ void main(void)
         while(numbers != NULL)
         {
             //delimiter ',' added to digits.
-            fprintf(fp, "%s", numbers);
+            fprintf(fp, "%s\n", numbers);
             numbers = strtok(NULL,"-+ /*=()");
         }
 
@@ -71,11 +71,12 @@ void main(void)
         while(ops != NULL)
         {   
             //delimiter " " added to operators list
-            fprintf(fp, "%s", ops);
+            fprintf(fp, "%s\n", ops);
             ops = strtok(NULL, "0123456789.");
         }
         
         //close file
         fclose(fp);
     }
+    return 0;
 }

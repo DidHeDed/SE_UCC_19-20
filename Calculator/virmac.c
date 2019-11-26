@@ -1,3 +1,13 @@
+/*@Authors: Adrian Denis Coffey
+ *          Michael Richard Smith 
+ *          William Rodgers Orr 
+ *          Tadhg Cecil Dolan
+ * 
+ * @Version: 0.3
+ * @Best_Calculator_Ever - 11/2019
+ * @Title: Virtual Machine.
+ */
+//HEADER INCLUDES
 #include <stdio.h>
 #include <stdbool.h>
 #include <stdlib.h>
@@ -5,15 +15,16 @@
 #define STACK_SIZE 256
 static int stack[STACK_SIZE];
 
+// uses digits in execution instead of instruction set definitions as couldn't get working with characters
 /** Instructions */
 enum instructions{
     HLT, // 0        :: halts program
-    PSH, // 1        :: pushes <val> to stack
+    PSH, // 1        :: pushes value onto stack
     POP, // 2        :: pops value from stack
-    ADD, // 3        :: adds top two vals on stack
-    MUL, // 4        :: multiplies top two vals on stack
-    DIV, // 5        :: divides top two vals on stack
-    SUB, // 6        :: subtracts top two vals on stack
+    ADD, // 3        :: adds top two values on stack
+    MUL, // 4        :: multiplies top two values on stack
+    DIV, // 5        :: divides top two values on stack
+    SUB, // 6        :: subtracts top two values on stack
 };
 
 /** Registers */
@@ -81,7 +92,6 @@ void eval(int instr) {
         case ADD: {
             registers[A] = stack[SP];
             SP = SP - 1;
-
             registers[B] = stack[SP];    // SP = SP - 1
             registers[C] = registers[B] + registers[A];
 
@@ -93,7 +103,6 @@ void eval(int instr) {
         case MUL: {
             registers[A] = stack[SP];
             SP = SP - 1;
-
             registers[B] = stack[SP];    //SP = SP - 1
             registers[C] = registers[B] * registers[A];
           
@@ -104,7 +113,6 @@ void eval(int instr) {
         case DIV: {
             registers[A] = stack[SP];
             SP = SP - 1;
-
             registers[B] = stack[SP];    // SP = SP - 1
             registers[C] = registers[B] / registers[A];
 
@@ -115,11 +123,8 @@ void eval(int instr) {
         case SUB: {
             registers[A] = stack[SP];
             SP = SP - 1;
-
-            registers[B] = stack[SP];    // SP = SP - 1
-            
+            registers[B] = stack[SP];    // SP = SP - 1            
             registers[C] = registers[B] - registers[A];
-
             stack[SP] = registers[C];    //* SP = SP + 1 
             printf("%d - %d = %d\n", registers[B], registers[A], registers[C]);
             break;
@@ -133,8 +138,12 @@ void eval(int instr) {
 }
 
 int main(int argc, char** argv) {
+    if (argc <= 1) {
+        printf("error: no input files\n");
+        return -1;
+    }
 
-    char *filename = "answers.txt";       // filename  
+    char *filename = "a2.txt";       // filename  
 
     FILE *file = fopen(filename, "r");
     if (!file) {
@@ -146,11 +155,11 @@ int main(int argc, char** argv) {
     instructions = malloc(sizeof(*instructions) * instruction_space);
 
     // read the "binary" file
-    int num;
+    char instruct;
     int i = 0;
-    while (fscanf(file, "%d", &num) > 0) {
-        instructions[i] = num;
-        printf("%d\n", instructions[i]);
+    while (fscanf(file, "%c", &instruct) != EOF) {
+        instructions[i] = instruct;
+        printf("%c\n", instructions[i]);
         i++;
         if (i >= instruction_space) {
             instruction_space *= 2;
@@ -168,7 +177,6 @@ int main(int argc, char** argv) {
     SP = -1;
 
     // loop through program, witout going out of the programs bounds
-    // 
     while (running && IP < instruction_count) {
         eval(FETCH);{
             IP = IP + 1;

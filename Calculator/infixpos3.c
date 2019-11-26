@@ -42,9 +42,8 @@ int main() {
 
            convertToPostfix(infx, pofx);
 
-           fprintf(out, "Infix Expression: %s\n", infx); 
-
-           fprintf(out, "\nPostfix Expression: %s\n\n\n",pofx);
+           fprintf(out, "%s ", pofx);
+    //fprintf(out, ";");
 
 fclose(in);
 

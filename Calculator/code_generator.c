@@ -371,7 +371,7 @@ Tree *load_ast() {
 }
  
 int main(int argc, char *argv[]) {
-    init_io(&source_fp, stdin,  "r",  "answers.txt"); //reads from input.txt
+    init_io(&source_fp, stdin,  "r",  "input.txt"); //reads from input.txt
     init_io(&dest_fp,   stdout, "wb", "a2.txt"); //outputs to answers.txt
     //fopen("input.txt", "r")
     //fopen("answers.txt", "wb");
