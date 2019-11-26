@@ -51,7 +51,7 @@ struct {
     NodeType   node_type;
     Code_t     opcode;
 } atr[] = {
-    {"Identifier"  , nd_Ident,    -1 },
+      {"Identifier"  , nd_Ident,    -1 },
     {"String"      , nd_String,   -1 },
     {"Integer"     , nd_Integer,  -1 },
     {"Sequence"    , nd_Sequence, -1 },
@@ -254,17 +254,18 @@ void list_code() {
     code *pc = object;
  
     again: fprintf(dest_fp, "%5d ", (int)(pc - object));
+	// this section is identifing what should be outputted at what time
     switch (*pc++) {
-        case FETCH: fprintf(dest_fp, "fetch [%d]\n", *(int32_t *)pc);
+        case FETCH: fprintf(dest_fp, "2 [%d]\n", *(int32_t *)pc);
                     pc += sizeof(int32_t);  goto again;
-        case STORE: fprintf(dest_fp, "store [%d]\n", *(int32_t *)pc);
+        case STORE: fprintf(dest_fp, "1 [%d]\n", *(int32_t *)pc);
                     pc += sizeof(int32_t);  goto again;
-        case PUSH : fprintf(dest_fp, "push  %d\n", *(int32_t *)pc);
+        case PUSH : fprintf(dest_fp, "1  %d\n", *(int32_t *)pc);
                     pc += sizeof(int32_t);    goto again;
-        case ADD  : fprintf(dest_fp, "add\n");      goto again;
-        case SUB  : fprintf(dest_fp, "sub\n");      goto again;
-        case MUL  : fprintf(dest_fp, "mul\n");      goto again;
-        case DIV  : fprintf(dest_fp, "div\n");      goto again;
+        case ADD  : fprintf(dest_fp, "3\n");      goto again;
+        case SUB  : fprintf(dest_fp, "6\n");      goto again;
+        case MUL  : fprintf(dest_fp, "4\n");      goto again;
+        case DIV  : fprintf(dest_fp, "5\n");      goto again;
         case MOD  : fprintf(dest_fp, "mod\n");      goto again;
         case LT   : fprintf(dest_fp, "lt\n");       goto again;
         case GT   : fprintf(dest_fp, "gt\n");       goto again;
@@ -283,16 +284,14 @@ void list_code() {
                         *(int32_t *)pc, (int32_t)(pc + *(int32_t *)pc - object));
                     pc += sizeof(int32_t); goto again;
         case PRTC : fprintf(dest_fp, "prtc\n");     goto again;
-        case PRTI : fprintf(dest_fp, "prti\n");     goto again;
+        case PRTI : fprintf(dest_fp, "test\n");     goto again;
         case PRTS : fprintf(dest_fp, "prts\n");     goto again;
-        case HALT : fprintf(dest_fp, "halt\n");     break;
+        case HALT : fprintf(dest_fp, "0\n");     break;
         default:error("listcode:Unknown opcode %d\n", *(pc - 1));
     }
 }
  
 void init_io(FILE **fp, FILE *std, const char mode[], const char fn[]) {
-    //I think this section of the code reads and writes files, from the looks of it, 'fp' is used as the file itself, while 'std' is the 
-    //standard output file, so we can see the mode to decide what to do, from reading to writeing the files
     if (fn[0] == '\0')
         *fp = std;
     else if ((*fp = fopen(fn, mode)) == NULL)
@@ -365,8 +364,6 @@ Tree *load_ast() {
 }
  
 int main(int argc, char *argv[]) {
-    //here is the main point we need to change, where we return 0, i think we need to change that to communicate with another area, or have the 
-    //Virtual Machine react when we return 0
     init_io(&source_fp, stdin,  "r",  argc > 1 ? argv[1] : "");
     init_io(&dest_fp,   stdout, "wb", argc > 2 ? argv[2] : "");
  
