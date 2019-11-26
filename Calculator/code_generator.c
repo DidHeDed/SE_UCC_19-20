@@ -1,3 +1,14 @@
+/*@Authors: Adrian Denis Coffey
+ *          Michael Richard Smith 
+ *          William Rodgers Ohr 
+ *          Tadhg Cecil Dolan
+ * 
+ * @Version: 0.3
+ * @Best_Calculator_Ever - 11/2019
+ * @Title: Code Generator.
+ */
+
+
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
@@ -51,7 +62,7 @@ struct {
     NodeType   node_type;
     Code_t     opcode;
 } atr[] = {
-      {"Identifier"  , nd_Ident,    -1 },
+    {"Identifier"  , nd_Ident,    -1 },
     {"String"      , nd_String,   -1 },
     {"Integer"     , nd_Integer,  -1 },
     {"Sequence"    , nd_Sequence, -1 },
@@ -63,11 +74,11 @@ struct {
     {"Assign"      , nd_Assign,   -1 },
     {"Negate"      , nd_Negate,   NEG},
     {"Not"         , nd_Not,      NOT},
-    {"Multiply"    , nd_Mul,      MUL},
-    {"Divide"      , nd_Div,      DIV},
+    {"*"    , nd_Mul,      MUL},
+    {"/"      , nd_Div,      DIV},
     {"Mod"         , nd_Mod,      MOD},
-    {"Add"         , nd_Add,      ADD},
-    {"Subtract"    , nd_Sub,      SUB},
+    {"+"         , nd_Add,      ADD},
+    {"-"    , nd_Sub,      SUB},
     {"Less"        , nd_Lss,      LT },
     {"LessEqual"   , nd_Leq,      LE },
     {"Greater"     , nd_Gtr,      GT },
@@ -360,8 +371,8 @@ Tree *load_ast() {
 }
  
 int main(int argc, char *argv[]) {
-    init_io(&source_fp, stdin,  "r",  "input.txt");
-    init_io(&dest_fp,   stdout, "wb", "answers.txt");
+    init_io(&source_fp, stdin,  "r",  "answers.txt"); //reads from input.txt
+    init_io(&dest_fp,   stdout, "wb", "a2.txt"); //outputs to answers.txt
     //fopen("input.txt", "r")
     //fopen("answers.txt", "wb");
  
