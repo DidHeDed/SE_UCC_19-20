@@ -60,7 +60,7 @@ void main(void)
         while(numbers != NULL)
         {
             //delimiter ',' added to digits.
-            fprintf(fp, "%s ", numbers);
+            fprintf(fp, "%s", numbers);
             numbers = strtok(NULL,"-+ /*=()");
         }
 
@@ -71,7 +71,7 @@ void main(void)
         while(ops != NULL)
         {   
             //delimiter " " added to operators list
-            fprintf(fp, " %s", ops);
+            fprintf(fp, "%s", ops);
             ops = strtok(NULL, "0123456789.");
         }
         
