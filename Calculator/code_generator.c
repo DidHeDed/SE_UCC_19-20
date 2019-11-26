@@ -247,13 +247,9 @@ void code_finish() {
 }
  
 void list_code() {
-    fprintf(dest_fp, "Datasize: %d Strings: %d\n", da_len(globals), da_len(string_pool));
-    for (int i = 0; i < da_len(string_pool); ++i)
-        fprintf(dest_fp, "%s\n", string_pool[i]);
- 
     code *pc = object;
  
-    again: fprintf(dest_fp, "%5d ", (int)(pc - object));
+    again: printf("\n");
 	// this section is identifing what should be outputted at what time
     switch (*pc++) {
         case FETCH: fprintf(dest_fp, "2 [%d]\n", *(int32_t *)pc);
@@ -364,8 +360,10 @@ Tree *load_ast() {
 }
  
 int main(int argc, char *argv[]) {
-    init_io(&source_fp, stdin,  "r",  argc > 1 ? argv[1] : "");
-    init_io(&dest_fp,   stdout, "wb", argc > 2 ? argv[2] : "");
+    init_io(&source_fp, stdin,  "r",  "input.txt");
+    init_io(&dest_fp,   stdout, "wb", "answers.txt");
+    //fopen("input.txt", "r")
+    //fopen("answers.txt", "wb");
  
     code_gen(load_ast());
     code_finish();
