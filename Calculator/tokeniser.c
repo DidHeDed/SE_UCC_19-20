@@ -61,11 +61,8 @@ void main(void)
         {
             //delimiter ',' added to digits.
             fprintf(fp, "%s ", numbers);
-            numbers = strtok(NULL,"-+ /*=");
+            numbers = strtok(NULL,"-+ /*=()");
         }
-
-        //separator of '['']' for operator list.
-        //fprintf(fp, "[");
 
         //tokenise string based on digits and decimal = operators
         ops = strtok(str1, "0123456789.");
@@ -77,9 +74,7 @@ void main(void)
             fprintf(fp, " %s", ops);
             ops = strtok(NULL, "0123456789.");
         }
-        //end square bracket to delimit list
-        //fprintf(fp, "]");
-
+        
         //close file
         fclose(fp);
     }
