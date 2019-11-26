@@ -133,12 +133,8 @@ void eval(int instr) {
 }
 
 int main(int argc, char** argv) {
-    if (argc <= 1) {
-        printf("error: no input files\n");
-        return -1;
-    }
 
-    char *filename = argv[1];       // filename  
+    char *filename = "answers.txt";       // filename  
 
     FILE *file = fopen(filename, "r");
     if (!file) {
